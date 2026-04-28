@@ -1,48 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>PoC Victim - Secure Domain</title>
+    <meta charset="UTF-8">
+    <title>Victim Dashboard - Secure Session</title>
     <style>
-        body { font-family: sans-serif; background: #f0f9ff; padding: 20px; }
-        .origin-box { background: #e0f2fe; padding: 15px; border-radius: 8px; border: 1px solid #3b82f6; margin-bottom: 20px; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f9ff; padding: 30px; }
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #bae6fd; }
         #dropZone {
-            width: 100%; height: 250px; background: #fff;
-            border: 4px dashed #3b82f6; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold; color: #3b82f6; font-size: 1.2em;
+            width: 100%; height: 200px; border: 4px dashed #3b82f6;
+            border-radius: 15px; display: flex; align-items: center; justify-content: center;
+            color: #3b82f6; font-size: 1.2rem; font-weight: 600;
+            transition: all 0.3s ease; background: #f8fafc;
         }
-        .status { color: #059669; font-weight: bold; margin-top: 10px; }
+        #dropZone.dragover { background: #dbeafe; border-color: #2563eb; transform: scale(1.01); }
+        .origin-tag { display: inline-block; background: #3b82f6; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.9rem; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="origin-box">
-        <strong>Victim Origin:</strong> <span id="originText"></span><br>
-        <div class="status">✅ Session Active (Simulated Cookies Loaded)</div>
-    </div>
+    <div class="card">
+        <div class="origin-tag">Origin: <span id="domainDisplay"></span></div>
+        <h1>User Dashboard</h1>
+        <p>This is a secure area. Cookies are simulated for this session.</p>
 
-    <div id="dropZone">
-        DROP ATTACKER PAYLOAD HERE
+        <div id="dropZone">
+            Drop content here to process
+        </div>
     </div>
 
     <script>
-        // 1. Tampilkan Origin otomatis
-        document.getElementById('originText').innerText = window.location.origin;
+        // Tampilkan domain saat ini
+        document.getElementById('domainDisplay').innerText = window.location.origin;
 
-        // 2. Pasang Cookie Otomatis untuk simulasi (Hanya di sisi Victim)
-        // Ini mensimulasikan user yang sudah login di situs ini
-        document.cookie = "session_id=SECRET_TOKEN_987654321; path=/";
-        document.cookie = "user_auth=authenticated_victim_user; path=/";
-        document.cookie = "account_type=premium_admin; path=/";
+        // SIMULASI COOKIE SENSITIF
+        // Dalam dunia nyata, ini adalah session token atau data login user
+        document.cookie = "session_token=ABC123XYZ999; path=/; SameSite=Lax";
+        document.cookie = "user_privilege=admin; path=/; SameSite=Lax";
+        document.cookie = "secret_data=TopSecretValue123; path=/; SameSite=Lax";
 
-        console.log("Simulated cookies have been set.");
-
-        // 3. Listener untuk visualisasi drop (Opsional, karena alert akan dipicu oleh payload Attacker)
         const zone = document.getElementById('dropZone');
-        zone.addEventListener('dragover', (e) => e.preventDefault());
+
+        zone.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Wajib agar bisa menerima drop
+            zone.classList.add('dragover');
+        });
+
+        zone.addEventListener('dragleave', () => {
+            zone.classList.remove('dragover');
+        });
+
         zone.addEventListener('drop', (e) => {
-            // Kita tidak perlu e.preventDefault() jika ingin memicu navigasi javascript:
-            console.log("Item dropped into zone.");
+            e.preventDefault();
+            zone.classList.remove('dragover');
+            
+            const data = e.dataTransfer.getData('text/plain');
+            console.log("Data received from cross-origin: ", data);
+
+            // SIMULASI KERENTANAN:
+            // Aplikasi mencoba menavigasi berdasarkan data yang di-drop
+            if (data.startsWith('javascript:')) {
+                // Browser seharusnya memblokir ini, tapi fitur Split-View/Multi-Window 
+                // terkadang meloloskan konteks navigasi ini.
+                window.location.href = data;
+            }
         });
     </script>
 </body>
