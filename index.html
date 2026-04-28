@@ -1,70 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PoC Victim - Pane R</title>
+    <title>PoC Victim - Secure Domain</title>
     <style>
         body { font-family: sans-serif; background: #f0f9ff; padding: 20px; }
-        .origin-box { background: #e0f2fe; padding: 10px; border-radius: 5px; border: 1px solid #3b82f6; margin-bottom: 20px; }
+        .origin-box { background: #e0f2fe; padding: 15px; border-radius: 8px; border: 1px solid #3b82f6; margin-bottom: 20px; }
         #dropZone {
-            width: 100%; height: 200px; background: #fff;
-            border: 4px dashed #3b82f6; border-radius: 10px;
+            width: 100%; height: 250px; background: #fff;
+            border: 4px dashed #3b82f6; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            font-weight: bold; color: #3b82f6; transition: 0.3s;
+            font-weight: bold; color: #3b82f6; font-size: 1.2em;
         }
-        #dropZone.dragover { background: #dbeafe; transform: scale(1.02); }
-        .log-container { margin-top: 20px; background: white; padding: 15px; border-radius: 8px; border: 1px solid #ccc; }
-        .success-tag { color: #059669; font-weight: bold; }
+        .status { color: #059669; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
+
     <div class="origin-box">
-        <strong>Victim Origin:</strong> <span id="originText"></span>
+        <strong>Victim Origin:</strong> <span id="originText"></span><br>
+        <div class="status">✅ Session Active (Simulated Cookies Loaded)</div>
     </div>
 
-    <div id="dropZone">DROP PAYLOAD HERE</div>
-
-    <div class="log-container">
-        <h3>Security Audit Log:</h3>
-        <div id="logContent">Waiting for interaction...</div>
+    <div id="dropZone">
+        DROP ATTACKER PAYLOAD HERE
     </div>
 
     <script>
-        document.getElementById('originText').innerText = window.location.origin || "Local File";
+        // 1. Tampilkan Origin otomatis
+        document.getElementById('originText').innerText = window.location.origin;
 
+        // 2. Pasang Cookie Otomatis untuk simulasi (Hanya di sisi Victim)
+        // Ini mensimulasikan user yang sudah login di situs ini
+        document.cookie = "session_id=SECRET_TOKEN_987654321; path=/";
+        document.cookie = "user_auth=authenticated_victim_user; path=/";
+        document.cookie = "account_type=premium_admin; path=/";
+
+        console.log("Simulated cookies have been set.");
+
+        // 3. Listener untuk visualisasi drop (Opsional, karena alert akan dipicu oleh payload Attacker)
         const zone = document.getElementById('dropZone');
-        const log = document.getElementById('logContent');
-
-        zone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            zone.classList.add('dragover');
-        });
-
-        zone.addEventListener('dragleave', () => {
-            zone.classList.remove('dragover');
-        });
-
+        zone.addEventListener('dragover', (e) => e.preventDefault());
         zone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            zone.classList.remove('dragover');
-            
-            const textData = e.dataTransfer.getData('text/plain');
-            const htmlData = e.dataTransfer.getData('text/html');
-
-            // Update Log
-            log.innerHTML = `
-                <p class="success-tag">Critical: Cross-Pane Data Received!</p>
-                <p><strong>Timestamp:</strong> ${new Date().toLocaleTimeString()}</p>
-                <p><strong>Raw Payload:</strong> <code>${textData}</code></p>
-                <p><strong>Injected HTML:</strong> ${htmlData}</p>
-            `;
-
-            // Tes Eksekusi (UXSS Proof)
-            if(textData.includes('javascript:')) {
-                const proceed = confirm("Payload detected. Attempt to execute window.location bypass?");
-                if(proceed) {
-                    window.location.href = textData;
-                }
-            }
+            // Kita tidak perlu e.preventDefault() jika ingin memicu navigasi javascript:
+            console.log("Item dropped into zone.");
         });
     </script>
 </body>
