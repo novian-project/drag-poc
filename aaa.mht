@@ -1,0 +1,11 @@
+From: <Saved by Web Browser>
+Subject: Test
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----Boundary"
+
+------Boundary
+Content-Type: text/html; charset="utf-8"
+Content-Location: https://example.com
+
+<script>alert('Aaaa Cookie: ' + document.cookie);</script>
+------Boundary--
